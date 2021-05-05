@@ -50,7 +50,7 @@ void MainWindow::on_checkButton_clicked()
 
     // save user solution in model and check amount of mistakes
     QModelIndex idx = model->index(this->puzzleNumber, 5, model->parent(QModelIndex()));
-    model->setData(idx, QVariant::fromValue(userSolution), 1);
+    model->setData(idx, QVariant::fromValue(userSolution), Qt::DisplayRole);
     int mistakes = model->puzzles()[this->puzzleNumber].checkSolution();
     // solution is incorrect
     if(mistakes != 0)
@@ -100,15 +100,15 @@ void MainWindow::drawScene()
 
     // fetching puzzle size, rows and columns descriptions from model
     QModelIndex idx = model->index(this->puzzleNumber, 1, model->parent(QModelIndex()));
-    QVariant tmp = model->data(idx, 1);
+    QVariant tmp = model->data(idx, Qt::DisplayRole);
     int size = tmp.toInt();
 
     idx = model->index(this->puzzleNumber, 3, model->parent(QModelIndex()));
-    tmp = model->data(idx, 1);
+    tmp = model->data(idx, Qt::DisplayRole);
     QList<QString> rows = tmp.toStringList();
 
     idx = model->index(this->puzzleNumber, 4, model->parent(QModelIndex()));
-    tmp = model->data(idx, 1);
+    tmp = model->data(idx, Qt::DisplayRole);
     QList<QString> columns = tmp.toStringList();
 
     // creating QGraphicsScene

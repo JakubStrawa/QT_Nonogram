@@ -35,9 +35,11 @@ QVariant NonogramModel::data(const QModelIndex &index, int role) const
     if (!index.isValid() || m_puzzles.count() == 0)
         return QVariant();
 
-    Puzzle tmp = m_puzzles[index.row()];
-    switch(index.column())
+    if (role == Qt::DisplayRole)
     {
+        Puzzle tmp = m_puzzles[index.row()];
+        switch(index.column())
+        {
         case 0: return tmp.getTheme();
         case 1: return tmp.getSize();
         case 2: return QVariant::fromValue(tmp.getSolution());
@@ -45,7 +47,9 @@ QVariant NonogramModel::data(const QModelIndex &index, int role) const
         case 4: return tmp.getColumnDescription();
         case 5: return QVariant::fromValue(tmp.getUserSolution());
         default: return QVariant();
+        }
     }
+    else return QVariant();
 }
 
 bool NonogramModel::setData(const QModelIndex &index, const QVariant &value, int role)
@@ -53,7 +57,7 @@ bool NonogramModel::setData(const QModelIndex &index, const QVariant &value, int
     if(!index.isValid())
             return false;
 
-    if (data(index, role) != value)
+    if (data(index, role) != value && role == Qt::DisplayRole)
     {
         if (index.column() == 0)
         {
