@@ -14,3 +14,5 @@ Press check button to see your score. Have fun!
 - 5x5
 - 10x10
 - 15x15
+
+![Game screenshot](game_screenshot.png)
