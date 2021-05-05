@@ -21,11 +21,12 @@ void MainWindow::on_actionNew_game_triggered()
 
     if(newGameDialog->exec() == QDialog::Accepted)
     {
-        //setting new game
+        // setting up labels and button
         this->ui->livesLeftLabel->setText(QString::number(newGameDialog->getLivesNumber()));
         this->ui->mistakesAmountLabel->setText(QString("Press check"));
         this->ui->checkButton->setEnabled(true);
-        this->puzzleNumber = newGameDialog->getSize() * 3 + newGameDialog->getTheme();
+        // saving puzzle number in model
+        this->puzzleNumber = model->getPuzzleRowNumber(newGameDialog->getTheme(), newGameDialog->getSize());
         drawScene();
     }
 }
@@ -33,6 +34,7 @@ void MainWindow::on_actionNew_game_triggered()
 void MainWindow::on_checkButton_clicked()
 {
     int livesNum = this->ui->livesLeftLabel->text().toInt();
+    // prepare user solution
     QVector<int> userSolution;
     for(auto t : tiles)
     {
@@ -46,9 +48,11 @@ void MainWindow::on_checkButton_clicked()
         }
     }
 
+    // save user solution in model and check amount of mistakes
     QModelIndex idx = model->index(this->puzzleNumber, 5, model->parent(QModelIndex()));
     model->setData(idx, QVariant::fromValue(userSolution), 1);
     int mistakes = model->puzzles()[this->puzzleNumber].checkSolution();
+    // solution is incorrect
     if(mistakes != 0)
     {
         animateScene(1000);
@@ -59,8 +63,10 @@ void MainWindow::on_checkButton_clicked()
         msgBox.setText("Your solution is incomplete");
         msgBox.exec();
     }
+    // solution is correct
     else if (mistakes == 0)
     {
+        // disabling all tiles
         for(auto t : tiles) t->setEnabled(false);
         animateScene(30000);
         userSolution.clear();
@@ -68,14 +74,16 @@ void MainWindow::on_checkButton_clicked()
         QMessageBox youWinMsgBox;
         youWinMsgBox.setText("You Won! \nCongratulations!");
         youWinMsgBox.exec();
+        // disabling check button
         this->ui->checkButton->setEnabled(false);
     }
-
+    // no lives left
     if(livesNum < 1)
     {
         QMessageBox youLostMsgBox;
         youLostMsgBox.setText("You lost! \nYou don't have any lives left.");
         youLostMsgBox.exec();
+        // disabling check button
         this->ui->checkButton->setEnabled(false);
     }
     else
@@ -90,6 +98,7 @@ void MainWindow::drawScene()
     columnTexts.clear();
     tiles.clear();
 
+    // fetching puzzle size, rows and columns descriptions from model
     QModelIndex idx = model->index(this->puzzleNumber, 1, model->parent(QModelIndex()));
     QVariant tmp = model->data(idx, 1);
     int size = tmp.toInt();
@@ -102,11 +111,13 @@ void MainWindow::drawScene()
     tmp = model->data(idx, 1);
     QList<QString> columns = tmp.toStringList();
 
+    // creating QGraphicsScene
     scene = new QGraphicsScene(this);
     ui->mainGraphicsView->setScene(scene);
 
     QFont serifFont("Times", 10, QFont::DemiBold);
 
+    // creating and placing tiles and descriptions
     for (int i = 0; i<size; i++)
     {
         for (int j=0; j<size; j++)
@@ -130,6 +141,7 @@ void MainWindow::drawScene()
 
 void MainWindow::animateScene(int time)
 {
+    // simple tile spining animation
     for (int i=0; i < tiles.size(); i++)
     {
         QTimeLine* timer = new QTimeLine(time);

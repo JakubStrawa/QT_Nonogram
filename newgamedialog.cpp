@@ -6,6 +6,7 @@ NewGameDialog::NewGameDialog(QWidget *parent) :
     ui(new Ui::NewGameDialog)
 {
     ui->setupUi(this);
+    // adding elements to combo boxes
     ui->sizeComboBox->addItem("5x5");
     ui->sizeComboBox->addItem("10x10");
     ui->sizeComboBox->addItem("15x15");
@@ -24,12 +25,12 @@ int NewGameDialog::getLivesNumber()
     return this->ui->livesSpinBox->value();
 }
 
-int NewGameDialog::getSize()
+QString NewGameDialog::getSize()
 {
-    return this->ui->sizeComboBox->currentIndex();
+    return this->ui->sizeComboBox->currentText();
 }
 
-int NewGameDialog::getTheme()
+QString NewGameDialog::getTheme()
 {
-    return this->ui->themeComboBox->currentIndex();
+    return this->ui->themeComboBox->currentText();
 }

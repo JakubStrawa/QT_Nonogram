@@ -10,6 +10,7 @@ void Puzzle::setUserSolution(const QVector<int> &value)
     userSolution = value;
 }
 
+// operator == for Puzzle class
 bool Puzzle::operator==(const Puzzle &puzzle)
 {
     if(this->solution == puzzle.solution && this->rows == puzzle.rows && this->columns == puzzle.columns && this->theme == puzzle.theme)
@@ -21,6 +22,7 @@ bool Puzzle::operator==(const Puzzle &puzzle)
     }
 }
 
+// operator != for Puzzle class
 bool Puzzle::operator!=(const Puzzle &puzzle)
 {
     if(this->solution == puzzle.solution && this->rows == puzzle.rows && this->columns == puzzle.columns && this->theme == puzzle.theme)
@@ -44,7 +46,6 @@ void Puzzle::setSize(int value)
 
 Puzzle::Puzzle()
 {
-
 }
 
 Puzzle::Puzzle(int size)
@@ -54,7 +55,6 @@ Puzzle::Puzzle(int size)
 
 Puzzle::~Puzzle()
 {
-
 }
 
 void Puzzle::addSolution(QVector<int> &solution)
@@ -109,24 +109,14 @@ QString Puzzle::getTheme()
     return theme;
 }
 
+// check puzzle solution with user solution given as value parameter
 int Puzzle::checkWithSolution(QVector<int> &value)
 {
     setUserSolution(value);
-    int mistakes = 0;
-    if(userSolution.size() != solution.size())
-    {
-        return -1;
-    }
-    for(int i=0; i<solution.size(); i++)
-    {
-        if(solution[i] != userSolution[i])
-        {
-            mistakes++;
-        }
-    }
-    return mistakes;
+    return checkSolution();
 }
 
+// check puzzle solution with user solution attribute
 int Puzzle::checkSolution()
 {
     int mistakes = 0;

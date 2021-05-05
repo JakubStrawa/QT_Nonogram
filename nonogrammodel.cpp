@@ -5,6 +5,7 @@ NonogramModel::NonogramModel(QVector<Puzzle> puzzles, QObject *parent)
 {
 }
 
+// create index for row and column
 QModelIndex NonogramModel::index(int row, int column, const QModelIndex &parent) const
 {
     if (parent.isValid()) return QModelIndex();
@@ -28,6 +29,7 @@ int NonogramModel::columnCount(const QModelIndex &parent) const
     return parent.isValid() ? 0 : 6;
 }
 
+// get data under index
 QVariant NonogramModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || m_puzzles.count() == 0)
@@ -53,7 +55,6 @@ bool NonogramModel::setData(const QModelIndex &index, const QVariant &value, int
 
     if (data(index, role) != value)
     {
-
         if (index.column() == 0)
         {
             this->m_puzzles[index.row()].setTheme(value.toString());
@@ -141,4 +142,18 @@ void NonogramModel::setPuzzles(QVector<Puzzle> puzzles)
 QVector<Puzzle> NonogramModel::puzzles() const
 {
     return m_puzzles;
+}
+
+// get puzzle number in model based on theme and size
+int NonogramModel::getPuzzleRowNumber(QString theme, QString size)
+{
+    int p_size = size.split("x")[0].toInt();
+    for (int i=0; i<m_puzzles.count(); i++)
+    {
+        if (m_puzzles[i].getTheme() == theme && m_puzzles[i].getSize() == p_size)
+        {
+            return i;
+        }
+    }
+    return -1;
 }

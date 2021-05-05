@@ -16,6 +16,7 @@ QRectF Tile::boundingRect() const
 
 void Tile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    // painting tile with correct color based on button pressed
     QRectF rec = boundingRect();
     QBrush brush(Qt::white);
     if(rightButtonPressed == true)
@@ -48,18 +49,24 @@ void Tile::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if (isTileEnabled)
     {
+        // tile is enabled and left mouse button is pressed
         if (event->button() == Qt::LeftButton)
         {
+            // if tile is blue, change it to white
             if(leftButtonPressed == true) leftButtonPressed = false;
+            // if tile is not blue, change it to blue
             else
             {
                 leftButtonPressed = true;
                 rightButtonPressed = false;
             }
         }
+        // tile is enabled and right mouse button is pressed
         else if (event->button() == Qt::RightButton)
         {
+            // if tile is red, change it to white
             if(rightButtonPressed == true) rightButtonPressed = false;
+            // if tile is not red, change it to red
             else
             {
                 rightButtonPressed = true;

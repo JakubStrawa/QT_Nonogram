@@ -16,8 +16,8 @@ public:
     ~NewGameDialog();
 
     int getLivesNumber();
-    int getSize();
-    int getTheme();
+    QString getSize();
+    QString getTheme();
 
 private:
     Ui::NewGameDialog *ui;

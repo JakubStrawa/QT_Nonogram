@@ -1,5 +1,6 @@
 #include "puzzlelist.h"
 
+// initialization of QVector<Puzzle>
 PuzzleList::PuzzleList()
 {
     //pig 5x5

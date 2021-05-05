@@ -30,6 +30,8 @@ public:
 
     QVector<Puzzle> puzzles() const;
 
+    int getPuzzleRowNumber(QString theme, QString size);
+
 public slots:
     void setPuzzles(QVector<Puzzle> puzzles);
 
