@@ -4,6 +4,7 @@ Tile::Tile()
 {
     leftButtonPressed = false;
     rightButtonPressed = false;
+    isTileEnabled = true;
     width = 30;
     height = 30;
 }
@@ -17,11 +18,16 @@ void Tile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 {
     QRectF rec = boundingRect();
     QBrush brush(Qt::white);
-    if(rightButtonPressed == true){
+    if(rightButtonPressed == true)
+    {
         brush.setColor(Qt::red);
-    }else if(leftButtonPressed == true){
+    }
+    else if(leftButtonPressed == true)
+    {
         brush.setColor(Qt::blue);
-    }else{
+    }
+    else
+    {
         brush.setColor(Qt::white);
     }
     painter->fillRect(rec, brush);
@@ -40,21 +46,34 @@ bool Tile::getIfRightButtonPressed()
 
 void Tile::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    if (event->button() == Qt::LeftButton) {
-        if(leftButtonPressed == true) leftButtonPressed = false;
-        else {
-            leftButtonPressed = true;
-            rightButtonPressed = false;
+    if (isTileEnabled)
+    {
+        if (event->button() == Qt::LeftButton)
+        {
+            if(leftButtonPressed == true) leftButtonPressed = false;
+            else
+            {
+                leftButtonPressed = true;
+                rightButtonPressed = false;
+            }
         }
-    } else if (event->button() == Qt::RightButton) {
-        if(rightButtonPressed == true) rightButtonPressed = false;
-        else {
-            rightButtonPressed = true;
-            leftButtonPressed = false;
+        else if (event->button() == Qt::RightButton)
+        {
+            if(rightButtonPressed == true) rightButtonPressed = false;
+            else
+            {
+                rightButtonPressed = true;
+                leftButtonPressed = false;
+            }
         }
+
+        update();
+        QGraphicsItem::mousePressEvent(event);
     }
 
-    update();
-    QGraphicsItem::mousePressEvent(event);
+}
 
+void Tile::setIsTileEnabled(bool value)
+{
+    isTileEnabled = value;
 }

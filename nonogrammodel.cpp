@@ -34,7 +34,8 @@ QVariant NonogramModel::data(const QModelIndex &index, int role) const
         return QVariant();
 
     Puzzle tmp = m_puzzles[index.row()];
-    switch(index.column()){
+    switch(index.column())
+    {
         case 0: return tmp.getTheme();
         case 1: return tmp.getSize();
         case 2: return QVariant::fromValue(tmp.getSolution());
@@ -50,46 +51,55 @@ bool NonogramModel::setData(const QModelIndex &index, const QVariant &value, int
     if(!index.isValid())
             return false;
 
-    if (data(index, role) != value) {
+    if (data(index, role) != value)
+    {
 
         if (index.column() == 0)
         {
             this->m_puzzles[index.row()].setTheme(value.toString());
             emit dataChanged(index, index, QVector<int>() << role);
             return true;
-        } else if(index.column() == 1)
+        }
+        else if(index.column() == 1)
         {
             this->m_puzzles[index.row()].setSize(value.toInt());
             emit dataChanged(index, index, QVector<int>() << role);
             return true;
-        } else if(index.column() == 2)
+        }
+        else if(index.column() == 2)
         {
             QVector<int> vector = value.value<QVector<int>>();
             this->m_puzzles[index.row()].addSolution(vector);
             emit dataChanged(index, index, QVector<int>() << role);
             return true;
-        } else if(index.column() == 3)
+        }
+        else if(index.column() == 3)
         {
             QList<QString> list = value.toStringList();
             this->m_puzzles[index.row()].addRowDescription(list);
             emit dataChanged(index, index, QVector<int>() << role);
             return true;
-        } else if(index.column() == 4)
+        }
+        else if(index.column() == 4)
         {
             QList<QString> list = value.toStringList();
             this->m_puzzles[index.row()].addColumnDescription(list);
             emit dataChanged(index, index, QVector<int>() << role);
             return true;
-        } else if(index.column() == 5)
+        }
+        else if(index.column() == 5)
         {
             QVector<int> vector = value.value<QVector<int>>();
             this->m_puzzles[index.row()].setUserSolution(vector);
             emit dataChanged(index, index, QVector<int>() << role);
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
-    } else
+    }
+    else
     {
         return false;
     }

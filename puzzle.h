@@ -18,24 +18,24 @@ public:
     Puzzle(int size);
     ~Puzzle();
 
+    int getSize() const;
+    void setSize(int value);
+    void setTheme(QString theme);
+    QString getTheme();
     void addSolution(QVector<int> &solution);
     QVector<int> getSolution();
     void addRowDescription(QVector<QString> &rows);
     QVector<QString> getRowDescription();
     void addColumnDescription( QVector<QString> &columns);
     QVector<QString> getColumnDescription();
-    void setTheme(QString theme);
-    QString getTheme();
-
-    int checkWithSolution(QVector<int> &userSolution);
-    int checkSolution();
     QVector<int> getUserSolution() const;
     void setUserSolution(const QVector<int> &value);
 
+    int checkWithSolution(QVector<int> &userSolution);
+    int checkSolution();
+
     bool operator==(const Puzzle &puzzle);
     bool operator!=(const Puzzle &puzzle);
-    int getSize() const;
-    void setSize(int value);
 };
 
 #endif // PUZZLE_H

@@ -25,6 +25,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     bool getIfLeftButtonPressed();
     bool getIfRightButtonPressed();
+    void setIsTileEnabled(bool value);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -32,6 +33,7 @@ protected:
 private:
     bool leftButtonPressed;
     bool rightButtonPressed;
+    bool isTileEnabled;
     qreal width;
     qreal height;
 };

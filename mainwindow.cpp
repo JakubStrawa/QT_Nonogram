@@ -14,8 +14,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-
 void MainWindow::on_actionNew_game_triggered()
 {
     NewGameDialog* newGameDialog = new NewGameDialog();
@@ -63,6 +61,7 @@ void MainWindow::on_checkButton_clicked()
     }
     else if (mistakes == 0)
     {
+        for(auto t : tiles) t->setEnabled(false);
         animateScene(30000);
         userSolution.clear();
         this->ui->mistakesAmountLabel->setText(QString::number(mistakes));
@@ -131,7 +130,8 @@ void MainWindow::drawScene()
 
 void MainWindow::animateScene(int time)
 {
-    for (int i=0; i < tiles.size(); i++){
+    for (int i=0; i < tiles.size(); i++)
+    {
         QTimeLine* timer = new QTimeLine(time);
         timer->setFrameRange(0, 100);
         QGraphicsItemAnimation* animation = new QGraphicsItemAnimation;

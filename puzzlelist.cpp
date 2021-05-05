@@ -216,13 +216,10 @@ PuzzleList::PuzzleList()
     sol.clear();
     rows.clear();
     columns.clear();
-
-
 }
 
 PuzzleList::~PuzzleList()
 {
-
 }
 
 Puzzle PuzzleList::getPuzzle(QString theme, int size)
